@@ -48,6 +48,12 @@ Usage:
 
 This tool dumps info about an existing image file.
 
+It supports the following inputs:
+* `amlbootsig` output
+* `aml_encrypt_gxb --bootsig` output, except when using `--amluserkey` or `--efuse`
+* `dd if=u-boot.img bs=512 skip=96` output for either of them (FIP TOC with headered entries)
+* `dd if=u-boot.img bs=1 skip=16` output, i.e. raw `@AML` header, of at least 64 bytes
+
 ### Known limitations
 
 * Correctness: Since there seems to be no public documentation for the @AML headers, any field names printed are guesses and may need to be revised once their meaning becauses clearer.

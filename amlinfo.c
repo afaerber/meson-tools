@@ -42,7 +42,7 @@ static int info(char *filename)
 			pos += 0;
 		} else if (len >= 16 + 4 && strncmp(buf + 16, AMLOGIC_SIGNATURE, 4) == 0) {
 			pos += 16;
-		} else if (len >= 8 && *(uint32_t *)buf == FIP_SIGNATURE) {
+		} else if (len >= 4 && ((struct FipHeader *)buf)->name == FIP_SIGNATURE) {
 			struct FipHeader *fip_hdr;
 			long toc_pos = pos;
 			int i = 0;

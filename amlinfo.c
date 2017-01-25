@@ -47,16 +47,15 @@ static int info(char *filename)
 			long toc_pos = pos;
 			int i = 0;
 
-			printf("FIP header @ 0x%" PRIx64 "\n", pos);
 			fip_hdr = malloc(sizeof(struct FipHeader) + sizeof(struct FipEntry));
 			if (fip_hdr == NULL)
 				return 1;
 			fseek(f, toc_pos, SEEK_SET);
 			len = fread(fip_hdr, 1, sizeof(struct FipHeader) + sizeof(struct FipEntry), f);
-			printf("FIP reserved: 0x%" PRIx64 "\n", fip_hdr->res);
+			printf("FIP header @ 0x%" PRIx64 " (flags 0x%" PRIx64 ")\n", pos, fip_hdr->flags);
 			printf("\n");
 			while (fip_hdr->entries[0].size > 0) {
-				printf("FIP TOC entry %u\n", i);
+				printf("FIP TOC entry %u (flags 0x%" PRIx64 ")\n", i, fip_hdr->entries[0].flags);
 				fseek(f, toc_pos + fip_hdr->entries[0].offset_address, SEEK_SET);
 				len = fread(buf, 1, 64, f);
 				if (len >= 4 && strncmp(buf, AMLOGIC_SIGNATURE, 4) == 0) {

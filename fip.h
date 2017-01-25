@@ -13,8 +13,9 @@ struct __attribute((__packed__)) FipEntry {
 };
 
 struct __attribute((__packed__)) FipHeader {
-	uint64_t sig;
-	uint64_t res;
+	uint32_t name;
+	uint32_t serial_number;
+	uint64_t flags;
 	struct FipEntry entries[0];
 };
 

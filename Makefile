@@ -1,8 +1,15 @@
-all: test
+all: amlbootsig
 
-test: test.c
-	$(CC) -g -o $@ -lcrypto test.c
+CFLAGS = -g
+LDFLAGS = -lcrypto
+
+amlbootsig.o: meson.h fip.h
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+amlbootsig: amlbootsig.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 clean:
-	-rm -f test
-
+	-rm -f amlbootsig test *.o

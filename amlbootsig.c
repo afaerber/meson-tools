@@ -8,43 +8,7 @@
 
 #include <openssl/sha.h>
 
-#define AMLOGIC_SIGNATURE "@AML"
-
-struct __attribute((__packed__)) AmlogicHeader {
-	char sig[4];
-	uint32_t size;
-	uint16_t header_size;
-	char x4;
-	char pad1;
-	uint32_t id;
-	uint32_t encrypted;
-	uint32_t digest_offset;
-	uint32_t digest_size;
-	uint32_t data_offset;
-	uint32_t data_size;
-	uint32_t bl2_offset;
-	uint32_t bl2_size;
-	uint32_t _offset2;
-	uint32_t pad2;
-	uint32_t _size2;
-	uint32_t fip_offset;
-	uint32_t unknown;
-};
-
-struct __attribute((__packed__)) FipEntry {
-	uint64_t uuid[2];
-	uint64_t offset_address;
-	uint64_t size;
-	uint64_t flags;
-};
-
-struct __attribute((__packed__)) FipHeader {
-	uint64_t sig;
-	uint64_t res;
-	struct FipEntry entries[0];
-};
-
-#define ROUND_UP(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
+#include "meson.h"
 
 static int do_fip(FILE *fout, FILE *fin)
 {
@@ -160,7 +124,7 @@ static int do_fip(FILE *fout, FILE *fin)
 	free(toc_buf);
 }
 
-static int test(void)
+static int boot_sig(const char *input, const char *output)
 {
 	FILE *fin, *fout;
 	uint8_t random[16];
@@ -184,11 +148,11 @@ static int test(void)
 	if (src_buf == NULL)
 		return 1;
 
-	fin = fopen("../boot_new.bin", "rb");
+	fin = fopen(input, "rb");
 	if (fin == NULL)
 		return 1;
 
-	fout = fopen("test.out", "wb");
+	fout = fopen(output, "wb");
 	if (fout == NULL)
 		return 1;
 
@@ -247,7 +211,12 @@ static int test(void)
 	return 0;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-	return test();
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s input output\n", argv[0]);
+		return 1;
+	}
+
+	return boot_sig(argv[1], argv[2]);
 }

@@ -42,7 +42,7 @@ static int do_fip(FILE *fout, FILE *fin)
 			.sig = AMLOGIC_SIGNATURE,
 			.size = 64,
 			.header_size = sizeof(struct AmlogicHeader),
-			.x4 = 1,
+			.header_version = 1,
 			.digest_size = SHA256_DIGEST_LENGTH,
 		};
 		SHA256_CTX sha256_ctx;
@@ -133,7 +133,7 @@ static int boot_sig(const char *input, const char *output)
 		.sig = AMLOGIC_SIGNATURE,
 		.size = 64,
 		.header_size = 64,
-		.x4 = 1,
+		.header_version = 1,
 		.encrypted = 0,
 		.digest_offset = 64,
 		.digest_size = 512,

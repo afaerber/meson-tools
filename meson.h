@@ -13,8 +13,7 @@ struct __attribute((__packed__)) AmlogicHeader {
 	char sig[4];
 	uint32_t size;
 	uint16_t header_size;
-	char x4;
-	char pad1;
+	uint16_t header_version;
 	uint32_t id;
 	uint32_t encrypted;
 	uint32_t digest_offset;

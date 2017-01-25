@@ -9,6 +9,7 @@ static void print_aml_header(const struct AmlogicHeader *hdr)
 {
 	printf("Size: 0x%" PRIx32 "\n", hdr->size);
 	printf("Header size: 0x%" PRIx16 "\n", hdr->header_size);
+	printf("Header version: %" PRIu16 "\n", hdr->header_version);
 	printf("ID: 0x%" PRIx32 "\n", hdr->id);
 	printf("Encrypted? %" PRIu32 "\n", hdr->encrypted);
 	printf("Digest @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->digest_offset, hdr->digest_size);

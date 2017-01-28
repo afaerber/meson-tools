@@ -39,6 +39,21 @@ For testing identity of output files, modify the code to use the random bytes fr
 * Endianness: Only Little Endian byte order has been considered. Running it on Big Endian hosts may misinterpret file input and/or result in wrong output and/or other misbehavior. The solution would be byte swaps, but those depend on the field width, which is guessed only and thus may change as the format is being better understood.
 * Security: The tool was not designed to defend against invalid or evil file input.
 
+## unamlbootsig
+
+Usage:
+```
+unamlbootsig u-boot.img boot_new.bin
+```
+
+This tool is supposed to do the reverse of `amlbootsig`, i.e. drop the boot signature.
+
+The output may differ from the original `aml_encrypt_gxb --bootsig`/`amlbootsig` input from 0xb000 to 0xbfff as well as in FIP TOC entry size 16-byte alignment.
+
+### Known limitations
+
+See `amlbootsig`.
+
 ## amlinfo
 
 Usage:

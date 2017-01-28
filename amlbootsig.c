@@ -89,7 +89,7 @@ static int do_fip(FILE *fout, FILE *fin)
 		SHA256_Update(&sha256_ctx, buf, len);
 		remaining -= len;
 		while (remaining > 0) {
-			len = fread(buf, 1, (remaining > 0x4000) ? 0x4000 : remaining, fin);
+			len = fread(buf, 1, MIN(remaining, 0x4000), fin);
 			//printf("Read %lx\n", len);
 			remaining -= len;
 			memset(buf + len, 0, len & 0xf);

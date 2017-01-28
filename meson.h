@@ -5,7 +5,13 @@
 
 #include "fip.h"
 
+#ifndef MIN
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+#ifndef ROUND_UP
 #define ROUND_UP(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
+#endif
 
 #define AMLOGIC_SIGNATURE "@AML"
 

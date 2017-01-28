@@ -71,8 +71,8 @@ static int do_fip(FILE *fout, FILE *fin)
 		fip_hdr.data_offset = fip_hdr.digest_offset + fip_hdr.digest_size;
 		fip_hdr.padding_offset = fip_hdr.data_offset;
 		fip_hdr._offset2 = fip_hdr.size - 0x60;
-		fip_hdr.fip_offset = fip_hdr.size - 0x60;
-		fip_hdr._size2 = fip_hdr.header_size + SHA256_DIGEST_LENGTH;
+		fip_hdr.payload_size = fip_hdr.size - 0x60;
+		fip_hdr.payload_offset = fip_hdr.header_size + SHA256_DIGEST_LENGTH;
 		memcpy(buf, &fip_hdr, sizeof(fip_hdr));
 
 		fwrite(buf, 1, fip_hdr.header_size + fip_hdr.digest_size, fout);
@@ -180,8 +180,8 @@ static int boot_sig(const char *input, const char *output)
 	hdr.padding_offset = hdr.digest_offset + 512;
 	hdr.padding_size = 3504;
 	hdr._offset2 = hdr.size - hdr.data_offset;
-	hdr._size2 = hdr.padding_offset + hdr.padding_size;
-	hdr.fip_offset = 0xb000;
+	hdr.payload_offset = hdr.padding_offset + hdr.padding_size;
+	hdr.payload_size = 0xb000;
 
 	buf = malloc(hdr.size);
 	if (buf == NULL)

@@ -24,8 +24,8 @@ struct __attribute((__packed__)) AmlogicHeader {
 	uint32_t padding_size;
 	uint32_t _offset2;
 	uint32_t pad2;
-	uint32_t _size2;
-	uint32_t fip_offset;
+	uint32_t payload_offset;
+	uint32_t payload_size;
 	uint32_t unknown;
 };
 

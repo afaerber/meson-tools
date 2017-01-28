@@ -17,8 +17,7 @@ static void print_aml_header(const struct AmlogicHeader *hdr)
 	printf("Padding @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->padding_offset, hdr->padding_size);
 	printf("_offset2: 0x%" PRIx32 "\n", hdr->_offset2);
 	printf("pad2: 0x%" PRIx32 "\n", hdr->pad2);
-	printf("_size2: 0x%" PRIx32 "\n", hdr->_size2);
-	printf("fip_offset: 0x%" PRIx32 "\n", hdr->fip_offset);
+	printf("Payload @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->payload_offset, hdr->payload_size);
 	printf("unknown: 0x%" PRIx32 "\n", hdr->unknown);
 	printf("\n");
 }

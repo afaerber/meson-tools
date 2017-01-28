@@ -39,8 +39,10 @@ static int info(char *filename)
 	do {
 		len = fread(buf, 1, 16 + 64, f);
 		if (len >= 4 && strncmp(buf, AMLOGIC_SIGNATURE, 4) == 0) {
+			hdr = (struct AmlogicHeader *)buf;
 			pos += 0;
 		} else if (len >= 16 + 4 && strncmp(buf + 16, AMLOGIC_SIGNATURE, 4) == 0) {
+			hdr = (struct AmlogicHeader *)(buf + 16);
 			pos += 16;
 		} else if (len >= 4 && ((struct FipHeader *)buf)->name == FIP_SIGNATURE) {
 			struct FipHeader *fip_hdr;
@@ -77,7 +79,6 @@ static int info(char *filename)
 		}
 
 		printf("@AML header @ 0x%" PRIx64 "\n", pos);
-		hdr = (struct AmlogicHeader *)(buf + pos);
 		print_aml_header(hdr);
 
 		fseek(f, pos + hdr->size, SEEK_SET);

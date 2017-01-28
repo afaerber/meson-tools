@@ -69,7 +69,7 @@ static int do_fip(FILE *fout, FILE *fin)
 		fip_hdr.id = 0x42424200 + i;
 		fip_hdr.digest_offset = fip_hdr.header_size;
 		fip_hdr.data_offset = fip_hdr.digest_offset + fip_hdr.digest_size;
-		fip_hdr.bl2_offset = fip_hdr.data_offset;
+		fip_hdr.padding_offset = fip_hdr.data_offset;
 		fip_hdr._offset2 = fip_hdr.size - 0x60;
 		fip_hdr.fip_offset = fip_hdr.size - 0x60;
 		fip_hdr._size2 = fip_hdr.header_size + SHA256_DIGEST_LENGTH;
@@ -177,10 +177,10 @@ static int boot_sig(const char *input, const char *output)
 	hdr.size += 0xb000;
 	hdr.digest_offset = hdr.header_size;
 	hdr.data_offset = hdr.header_size + SHA256_DIGEST_LENGTH;
-	hdr.bl2_offset = hdr.digest_offset + 512;
-	hdr.bl2_size = 3504;
+	hdr.padding_offset = hdr.digest_offset + 512;
+	hdr.padding_size = 3504;
 	hdr._offset2 = hdr.size - hdr.data_offset;
-	hdr._size2 = hdr.bl2_offset + hdr.bl2_size;
+	hdr._size2 = hdr.padding_offset + hdr.padding_size;
 	hdr.fip_offset = 0xb000;
 
 	buf = malloc(hdr.size);
@@ -189,7 +189,7 @@ static int boot_sig(const char *input, const char *output)
 
 	memset(buf, 0, hdr.size);
 	memcpy(buf, &hdr, sizeof(struct AmlogicHeader));
-	memcpy(buf + hdr.bl2_offset + hdr.bl2_size, src_buf, 0xb000);
+	memcpy(buf + hdr.padding_offset + hdr.padding_size, src_buf, 0xb000);
 
 	SHA256_Init(&sha256_ctx);
 	SHA256_Update(&sha256_ctx, buf, hdr.header_size);

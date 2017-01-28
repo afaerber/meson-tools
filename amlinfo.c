@@ -14,7 +14,7 @@ static void print_aml_header(const struct AmlogicHeader *hdr)
 	printf("Encrypted? %" PRIu32 "\n", hdr->encrypted);
 	printf("Digest @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->digest_offset, hdr->digest_size);
 	printf("Data @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->data_offset, hdr->data_size);
-	printf("BL2 @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->bl2_offset, hdr->bl2_size);
+	printf("Padding @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->padding_offset, hdr->padding_size);
 	printf("_offset2: 0x%" PRIx32 "\n", hdr->_offset2);
 	printf("pad2: 0x%" PRIx32 "\n", hdr->pad2);
 	printf("_size2: 0x%" PRIx32 "\n", hdr->_size2);

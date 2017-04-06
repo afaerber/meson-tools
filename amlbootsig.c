@@ -20,8 +20,10 @@ static int do_fip(FILE *fout, FILE *fin)
 	assert(sizeof(struct FipEntry) == 40);
 
 	toc_buf = malloc(0x4000);
-	if (toc_buf == NULL)
+	if (toc_buf == NULL) {
+		perror("malloc");
 		return 1;
+	}
 
 	ptoc = (struct FipHeader *)toc_buf;
 	toc_pos = ftell(fout);
@@ -34,8 +36,10 @@ static int do_fip(FILE *fout, FILE *fin)
 	fwrite(toc_buf, 1, 0x4000, fout);
 
 	buf = malloc(0x10000);
-	if (buf == NULL)
+	if (buf == NULL) {
+		perror("malloc");
 		return 1;
+	}
 
 	for (i = 0; i < n; i++) {
 		struct AmlogicHeader fip_hdr = {
@@ -150,12 +154,16 @@ static int boot_sig(const char *input, const char *output)
 		return 1;
 
 	fin = fopen(input, "rb");
-	if (fin == NULL)
+	if (fin == NULL) {
+		perror(input);
 		return 1;
+	}
 
 	fout = fopen(output, "wb");
-	if (fout == NULL)
+	if (fout == NULL) {
+		perror(output);
 		return 1;
+	}
 
 	for (i = 0; i < 16; i++)
 	//	random[i] = rand();
@@ -185,8 +193,10 @@ static int boot_sig(const char *input, const char *output)
 	hdr.payload_size = 0xb000;
 
 	buf = malloc(hdr.size);
-	if (buf == NULL)
+	if (buf == NULL) {
+		perror("malloc");
 		return 1;
+	}
 
 	memset(buf, 0, hdr.size);
 	memcpy(buf, &hdr, sizeof(struct AmlogicHeader));

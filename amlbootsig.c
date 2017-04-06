@@ -122,6 +122,7 @@ static int do_fip(FILE *fout, FILE *fin)
 	fwrite(toc_buf, 1, 0x4000, fout);
 	fseek(fout, 0, SEEK_END);
 	free(toc_buf);
+	return 0;
 }
 
 static int boot_sig(const char *input, const char *output)

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPDX-License-Identifier: GPL-2.0+ OR MIT
+ */
+
 #ifndef MESON_COMMON_H
 #define MESON_COMMON_H
 

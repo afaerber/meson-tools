@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017 Andreas Färber
+ *
+ * SPLX-License-Identifier: GPL-2.0+
+ */
+
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>

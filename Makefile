@@ -9,13 +9,13 @@ amlbootsig.o unamlbootsig.o amlinfo.o: meson.h fip.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 amlbootsig: amlbootsig.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 unamlbootsig: unamlbootsig.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 amlinfo: amlinfo.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
 	-rm -f amlbootsig unamlbootsig amlinfo test *.o

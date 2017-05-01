@@ -76,7 +76,6 @@ static int extract(const char *input, const char *output)
 					hdr = (struct AmlogicHeader *)buf;
 					fip_hdr->entries[i].size -= hdr->header_size + hdr->digest_size;
 					pos = ftell(fout);
-					//printf("Rounded up from %" PRIx64 " to %" PRIx64 "\n", pos, ROUND_UP(pos, 0x4000));
 					pos = ROUND_UP(pos, 0x4000);
 					fseek(fout, pos, SEEK_SET);
 					fseek(fin, toc_pos + fip_hdr->entries[i].offset_address + fip_hdr->entries[i].size, SEEK_SET);

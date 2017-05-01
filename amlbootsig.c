@@ -33,7 +33,6 @@ static int do_fip(FILE *fout, FILE *fin)
 
 	ptoc = (struct FipHeader *)toc_buf;
 	toc_pos = ftell(fout);
-	//printf("toc_pos = %lx\n", toc_pos);
 	fread(toc_buf, 1, 0x4000, fin);
 	n = 0;
 	while (ptoc->entries[n].size != 0) {
@@ -100,7 +99,6 @@ static int do_fip(FILE *fout, FILE *fin)
 		remaining -= len;
 		while (remaining > 0) {
 			len = fread(buf, 1, MIN(remaining, 0x4000), fin);
-			//printf("Read %lx\n", len);
 			remaining -= len;
 			memset(buf + len, 0, len & 0xf);
 			SHA256_Update(&sha256_ctx, buf, ROUND_UP(len, 16));
@@ -116,8 +114,6 @@ static int do_fip(FILE *fout, FILE *fin)
 		fwrite(buf, 1, len, fout);
 
 		ptoc->entries[i].size += fip_hdr.header_size + fip_hdr.digest_size + padlen;
-		//ptoc->entries[i].offset_address += padlen;
-		//printf("FIP TOC entry offset_address: %" PRIx64 "\n", ptoc->entries[i].offset_address);
 		printf("FIP TOC entry size: %" PRIx64 "\n", ptoc->entries[i].size);
 		len = ptoc->entries[i].size & (0x4000 - 1);
 		if (len != 0) {
@@ -127,7 +123,6 @@ static int do_fip(FILE *fout, FILE *fin)
 		}
 	}
 	free(buf);
-	//ptoc->entries[i].offset_address = ROUND_UP(ptoc->entries[i].offset_address, 16);
 	fseek(fout, toc_pos, SEEK_SET);
 	fwrite(toc_buf, 1, 0x4000, fout);
 	fseek(fout, 0, SEEK_END);

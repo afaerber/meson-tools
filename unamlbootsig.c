@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017 Andreas Färber
  *
- * SPLX-License-Identifier: GPL-2.0+
+ * SPLX-License-Identifier: GPL-2.0-or-later WITH openvpn-openssl-exception
  */
 
 #include <inttypes.h>

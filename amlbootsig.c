@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017 Andreas Färber
  *
- * SPDX-License-Identifier: GPL-2.0+
+ * SPDX-License-Identifier: GPL-2.0-or-later WITH openvpn-openssl-exception
  */
 
 #include <assert.h>

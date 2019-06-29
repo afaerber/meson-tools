@@ -105,6 +105,6 @@ It supports the following inputs:
 
 ### Known limitations
 
-* Correctness: Since there seems to be no public documentation for the @AML headers, any field names printed are guesses and may need to be revised once their meaning becauses clearer.
+* Correctness: Since there seems to be no public documentation for the @AML headers, any field names printed are guesses and may need to be revised once their meaning becomes clearer.
 * Endianness: Only Little Endian byte order has been considered, see above.
 * Security: See above.

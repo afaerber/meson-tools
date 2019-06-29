@@ -54,6 +54,40 @@ The output may differ from the original `aml_encrypt_gxb --bootsig`/`amlbootsig`
 
 See `amlbootsig`.
 
+## amlbootsig-gxl
+
+Usage:
+```
+ amlbootsig-gxl bl2_new.bin bl2_new.bin.sig
+```
+
+This tool is supposed to provide equivalent output to:
+```
+ aml_encrypt_gxl --bl2sig --input bl2_new.bin --output bl2_new.bin.sig
+```
+with the tool version distributed by Amlogic in their 2018-07-06 Buildroot tarball.
+
+### How to compare output
+
+```
+ hexdump -C a/bl2_new.bin.sig > a/bl2_new.bin.sig.hex
+ hexdump -C b/bl2_new.bin.sig > b/bl2_new.bin.sig.hex
+ diff -u a/bl2_new.bin.sig.hex b/bl2_new.bin.sig.hex | less
+```
+
+This should result in a diff with only the following differences:
+
+* First 16 bytes will be random in original.
+* Due to padding contents differing, the SHA256 hash in the header will differ as well.
+
+For testing identity of output files, modify the code to use the random bytes from the file you are testing against.
+
+### Known limitations
+
+Specifically tailored to BL2, will need changes for BL30.
+
+Otherwise see `amlbootsig`.
+
 ## amlinfo
 
 Usage:

@@ -84,7 +84,42 @@ For testing identity of output files, modify the code to use the random bytes fr
 
 ### Known limitations
 
-Specifically tailored to BL2, will need changes for BL30.
+Specifically tailored to BL2.
+
+Otherwise see `amlbootsig`.
+
+## amlbootenc-gxl
+
+Usage:
+```
+ amlbootenc-gxl u-boot.bin u-boot.bin.enc
+```
+
+This tool is supposed to provide equivalent output to:
+```
+ aml_encrypt_gxl --bl3enc --input u-boot.bin --output u-boot.bin.enc
+```
+with the tool versions distributed by Amlogic in their 2018-07-06 Buildroot tarball.
+
+### How to compare output
+
+```
+ hexdump -C a/u-boot.bin.enc > a/u-boot.bin.enc.hex
+ hexdump -C b/u-boot.bin.enc > b/u-boot.bin.enc.hex
+ diff -u a/u-boot.bin.enc.hex b/u-boot.bin.enc.hex | less
+```
+
+This should result in a diff with the following differences:
+
+* Symmetric AES CBC encryption key (32 bytes) and initialization vector (16 bytes) are random.
+* Therefore the whole encrypted contents will differ.
+* Due to differing encryption the SHA256 hash (32 bytes) in the header will differ as well.
+
+For testing identity of output files, modify the code to use the key/IV bytes from the file you are testing against.
+
+### Known limitations
+
+Specifically tailored to BL3x.
 
 Otherwise see `amlbootsig`.
 

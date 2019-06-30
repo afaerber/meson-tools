@@ -31,4 +31,28 @@ struct __attribute((__packed__)) AmlogicHeader {
 	uint32_t unknown;
 };
 
+#define AMLOGIC_C_SIGNATURE "AMLC"
+
+struct __attribute((__packed__)) AmlogicCryptoHeader {
+	uint16_t _unknown;
+	uint16_t block_size;
+	uint32_t encrypted;
+	uint32_t _unknown2;
+	char sig[4];
+	uint32_t first_offset;
+	uint32_t data_offset;
+	uint32_t encrypted_size;
+	uint32_t payload_size;
+	uint8_t digest[32];
+	uint8_t key[32];
+	uint8_t iv[16];
+	uint8_t _pad[24];
+	char cipher[7];
+	char date[20];
+	uint8_t _pad2[69];
+	uint8_t _pad3[16];
+	uint32_t _unknown3;
+	char sig2[4];
+};
+
 #endif

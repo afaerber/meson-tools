@@ -3,8 +3,8 @@ all: amlbootsig unamlbootsig amlbootsig-gxl amlinfo
 CFLAGS = -g
 LDFLAGS = -lcrypto
 
-amlbootsig.o unamlbootsig.o amlinfo.o: meson.h fip.h
-amlbootsig-gxl.o: meson.h
+amlbootsig.o unamlbootsig.o amlinfo.o: meson.h aml.h fip.h
+amlbootsig-gxl.o: meson.h aml.h
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<

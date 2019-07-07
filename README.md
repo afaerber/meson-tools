@@ -123,6 +123,49 @@ Specifically tailored to BL3x.
 
 Otherwise see `amlbootsig`.
 
+## amlbootimg-gxl
+
+Usage:
+```
+ fiptool --align 0x4000 --scp-fw bl30_new.bin.enc --soc-fw bl31.img.enc --nt-fw u-boot.bin.enc fip.bin
+ amlbootenc-gxl fip.bin fip.bin.enc
+ dd if=fip.bin.enc of=fip.enc.bin bs=512 count=31
+ amlbootimg-gxl bl2_new.bin.sig fip.enc.bin bl30_new.bin.enc bl31.img.enc u-boot.bin.enc u-boot.img
+```
+
+This tool is supposed to provide equivalent output to:
+```
+ aml_encrypt_gxl --bootmk --bl2 bl2_new.bin.sig --bl30 bl30_new.bin.enc --bl31 bl31.img.enc --bl33 u-boot.bin.enc --output u-boot.img
+ dd if=u-boot.img.sd.bin of=/dev/XXX bs=512 skip=1 seek=1
+```
+with the tool versions distributed by Amlogic in their 2018-07-06 Buildroot tarball.
+
+To deploy the file to SD card:
+```
+ dd if=u-boot.img of=/dev/XXX bs=512 seek=1
+```
+
+### How to compare output
+
+```
+ hexdump -C a/u-boot.img > a/u-boot.img.hex
+ hexdump -C b/u-boot.img > b/u-boot.img.hex
+ diff -u a/u-boot.img.hex b/u-boot.img.hex | less
+```
+
+This should result in a diff with the following differences:
+
+* Symmetric AES CBC encryption key (32 bytes) and initialization vector (16 bytes) are random.
+* Therefore the whole encrypted contents will differ.
+* Due to differing encryption the SHA256 hash (32 bytes) in the header will differ as well.
+* Random padding bytes between the FIP images.
+
+### Known limitations
+
+* Hardcodes file offsets matching the current binary blobs. May break with upstream BL31 or newer/older blobs.
+
+Otherwise see `amlbootsig`.
+
 ## amlinfo
 
 Usage:

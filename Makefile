@@ -1,10 +1,10 @@
-all: amlbootsig unamlbootsig amlbootsig-gxl amlbootenc-gxl amlinfo
+all: amlbootsig unamlbootsig amlbootsig-gxl amlbootenc-gxl amlbootimg-gxl amlinfo
 
 CFLAGS = -g
 LDFLAGS = -lcrypto
 
 amlbootsig.o unamlbootsig.o amlinfo.o: meson.h aml.h fip.h
-amlbootsig-gxl.o amlbootenc-gxl.o: meson.h aml.h
+amlbootsig-gxl.o amlbootenc-gxl.o amlbootimg-gxl.o: meson.h aml.h
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
@@ -19,6 +19,9 @@ amlbootsig-gxl: amlbootsig-gxl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 amlbootenc-gxl: amlbootenc-gxl.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+amlbootimg-gxl: amlbootimg-gxl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 amlinfo: amlinfo.o

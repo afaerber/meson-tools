@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Andreas Färber
+ * Copyright (c) 2017, 2019 Andreas Färber
  *
  * SPDX-License-Identifier: GPL-2.0+ OR MIT
  */

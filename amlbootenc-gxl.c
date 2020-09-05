@@ -34,6 +34,7 @@
 
 static int boot_enc(const char *input, const char *output)
 {
+	int i;
 	FILE *fin, *fout;
 	long file_size;
 	uint8_t *src_buf, *buf;
@@ -130,10 +131,10 @@ static int boot_enc(const char *input, const char *output)
 	memcpy(hdr.iv, (uint8_t[]){ 0x14, 0x82, 0x5b, 0x1b, 0x10, 0xc1, 0x49, 0x0d, 0x8f, 0x13, 0x0a, 0x99, 0x15, 0x50, 0x1d, 0x37 }, 16);
 	}
 #else
-	for (int i = 0; i < sizeof(hdr.key); i++) {
+	for (i = 0; i < sizeof(hdr.key); i++) {
 		hdr.key[i] = rand();
 	}
-	for (int i = 0; i < sizeof(hdr.iv); i++) {
+	for (i = 0; i < sizeof(hdr.iv); i++) {
 		hdr.iv[i] = rand();
 	}
 #endif
@@ -151,7 +152,7 @@ static int boot_enc(const char *input, const char *output)
 	AES_cbc_encrypt(src_buf, buf + hdr.first_offset, hdr.block_size, &aes_key, iv, AES_ENCRYPT);
 	SHA256_Update(&sha256_ctx, buf + hdr.first_offset, hdr.block_size);
 
-	for (int i = 1; i < hdr.payload_size / hdr.block_size; i++) {
+	for (i = 1; i < hdr.payload_size / hdr.block_size; i++) {
 		memset(src_buf, 0, hdr.block_size);
 		fread(src_buf, 1, hdr.block_size, fin);
 		AES_cbc_encrypt(src_buf, buf + hdr.data_offset + (i - 1) * hdr.block_size, hdr.block_size, &aes_key, iv, AES_ENCRYPT);
